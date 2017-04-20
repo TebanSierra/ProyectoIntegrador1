@@ -16,10 +16,10 @@ public class settings : MonoBehaviour {
 	}
 
     public Image imagen;
-    private bool a;
+    private bool activo;
     public void setings(){
-        a = !a;
-        if (a){
+        activo = !activo;
+        if (activo){
             imagen.gameObject.SetActive(true);
         }else{
             imagen.gameObject.SetActive(false);

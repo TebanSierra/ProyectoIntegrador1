@@ -83,13 +83,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AddNanogram.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\KeyNonogram.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\LevelSelect.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MenuControl.cs" />
     <Compile Include="Assets\Scripts\MainMenu\Vol.cs" />
     <Compile Include="Assets\Scripts\MainMenu\settings.cs" />
     <Compile Include="Assets\Scripts\Nonogram.cs" />
     <Compile Include="Assets\Scripts\Nonograms\CasaNonogram.cs" />
-    <Compile Include="Assets\Scripts\Nonograms\KeyNonogram.cs" />
     <Compile Include="Assets\Scripts\Nonograms\PcNonogram.cs" />
     <Compile Include="Assets\Scripts\Nonograms\controlback.cs" />
   </ItemGroup>
