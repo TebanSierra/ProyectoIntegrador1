@@ -20,88 +20,70 @@ public class AddNanogram : MonoBehaviour {
     private int nonogramSize;
     private int nonogramHeight;
     private int monogramWidth;
-    
+    private int cols;
+    [SerializeField]
+    private GameObject nonogramPuzzle;
+    public List<string[]> rows;
+    private List<string[]> columns;
+
 
     private byte[,] puzzle;
 
     //Funcion que es llamada cuando se inica el juego
     void Awake() {
+        rows = nonogramPuzzle.GetComponent<KeyNonogram>().getRows();
+        fillUpperHints();
+        fillRest();
+    }
+
+    void fillUpperHints() {
         int x = 0;
-        int m = 0;
-        while (x<nonogramSize) {
-            
-            for (int i = 0; i < 4; i++) {
-                m = 0;
-                m = int.Parse(x.ToString() + i.ToString());
-                switch (m) {
-                    case 3:
-                        hints.GetComponent<Text>().text = "12";
-                        break;
-                    case 122:
-                        hints.GetComponent<Text>().text = "2";
-                        break;
-                    case 123:
-                        hints.GetComponent<Text>().text = "7";
-                        break;
-                    case 241:
-                        hints.GetComponent<Text>().text = "1";
-                        break;
-                    case 242:
-                        hints.GetComponent<Text>().text = "1";
-                        break;
-                    case 243:
-                        hints.GetComponent<Text>().text = "6";
-                        break;
-                    case 362:
-                        hints.GetComponent<Text>().text = "1";
-                        break;
-                    case 363:
-                        hints.GetComponent<Text>().text = "1";
-                        break;
-                    case 480:
-                        hints.GetComponent<Text>().text = "1";
-                        break;
-                    case 481:
-                        hints.GetComponent<Text>().text = "2";
-                        break;
-                    case 482:
-                        hints.GetComponent<Text>().text = "1";
-                        break;
-                    case 483:
-                        hints.GetComponent<Text>().text = "1";
-                        break;
-                    case 602:
-                        hints.GetComponent<Text>().text = "2";
-                        break;
-                    case 603:
-                        hints.GetComponent<Text>().text = "7";
-                        break;
-                    case 723:
-                        hints.GetComponent<Text>().text = "12";
-                        break;
-                    default:
-                        hints.GetComponent<Text>().text = "";
-                        break;
+        while (x < nonogramPuzzle.GetComponent<KeyNonogram>().getRow() *(nonogramPuzzle.GetComponent<KeyNonogram>().getCols()+ nonogramPuzzle.GetComponent<KeyNonogram>().getRow())) {
+            foreach (string[] row in rows) {
+                for (int i = 0; i < nonogramPuzzle.GetComponent<KeyNonogram>().getRow(); i++) {
+                    hints.GetComponent<Text>().text = "";
+                    GameObject text = Instantiate(hints);
+                    text.name = "empty" + i;
+                    text.transform.SetParent(nonogramField, false);
+                    x++;
                 }
-                GameObject text = Instantiate(hints);
-                text.name = m.ToString();
-                text.transform.SetParent(nonogramField, false);
 
+                for (int i = 0; i < nonogramPuzzle.GetComponent<KeyNonogram>().getTotalSize(); i++) {
+                    hints.GetComponent<Text>().text = row[i];
+                    GameObject text = Instantiate(hints);
+                    text.name = "row" + i;
+                    text.transform.SetParent(nonogramField, false);
+                    x++;
+                }
 
-            }
-            for (int i = 0; i < 12; i++) {
-                GameObject piece = Instantiate(nonogramPiece);
-                piece.name = x.ToString();
-                piece.transform.SetParent(nonogramField, false);
-                x++;
             }
         }
     }
 
+    void fillRest() {
+        int x = 0;
+        int m = 0;
+        int tot = 0;
+        columns = nonogramPuzzle.GetComponent<KeyNonogram>().getCol();
+        while (x < nonogramSize + (nonogramPuzzle.GetComponent<KeyNonogram>().getRow() * nonogramPuzzle.GetComponent<KeyNonogram>().getCols())) {
+            for (int i = 0; i < nonogramPuzzle.GetComponent<KeyNonogram>().getTotalHeight(); i++) {
+                foreach (string[] column in columns) {
+                    hints.GetComponent<Text>().text = column[i];
+                    GameObject text = Instantiate(hints);
+                    text.name = "column" + tot;
+                    text.transform.SetParent(nonogramField, false);
+                    x++;
+                    tot++;
+                }
 
-    void setPuzzle(byte[,] puzzle) {
-        int width = puzzle.GetLength(1);
-        int heigth = puzzle.GetLength(0);
-        this.puzzle = new byte[heigth+(heigth/2), width+(width/2)];
+                for (int j = 0; j < nonogramPuzzle.GetComponent<KeyNonogram>().getTotalSize(); j++) {
+                    GameObject piece = Instantiate(nonogramPiece);
+                    piece.name = m.ToString();
+                    piece.transform.SetParent(nonogramField, false);
+                    m++;
+                    x++;
+                }
+            }
+        }
     }
 }
