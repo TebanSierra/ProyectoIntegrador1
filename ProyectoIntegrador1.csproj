@@ -88,6 +88,8 @@
     <Compile Include="Assets\Scripts\MainMenu\MenuControl.cs" />
     <Compile Include="Assets\Scripts\MainMenu\Vol.cs" />
     <Compile Include="Assets\Scripts\MainMenu\settings.cs" />
+    <Compile Include="Assets\Scripts\Maze\ExitControl.cs" />
+    <Compile Include="Assets\Scripts\Maze\Moverderecha.cs" />
     <Compile Include="Assets\Scripts\Nonogram.cs" />
     <Compile Include="Assets\Scripts\Nonograms\CasaNonogram.cs" />
     <Compile Include="Assets\Scripts\Nonograms\PcNonogram.cs" />
