@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExitControl : MonoBehaviour {
 
@@ -17,6 +18,7 @@ public class ExitControl : MonoBehaviour {
     {
         if (o.name == "Player")
         {
+            SceneManager.LoadScene("LevelSelec");
             Debug.Log("You win");
         }
     }
