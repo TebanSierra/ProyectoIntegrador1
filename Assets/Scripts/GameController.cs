@@ -26,16 +26,18 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     //Variable que contendra la posicion donde sera creado el Juego.
     private Transform canvas;
+    private ChosenNonogram chosenGram;
 
     void Start() {
         getButtons();
         addListener();
-        puzzleHeight = nonogramPuzzle.GetComponent<KeyNonogram>().getTotalHeight();
-        puzzleWidth = nonogramPuzzle.GetComponent<KeyNonogram>().getTotalSize();
+        chosenGram = GetComponent<AddNanogram>().getChosenNonogram();
+        puzzleHeight = chosenGram.getTotalHeight();
+        puzzleWidth = chosenGram.getTotalSize();
         correctPuzzle = new byte[puzzleHeight,puzzleWidth];
         currentPuzzle = new byte[puzzleHeight, puzzleWidth];
-        correctPuzzle = nonogramPuzzle.GetComponent<KeyNonogram>().getResult();
-        puzzleSize = nonogramPuzzle.GetComponent<KeyNonogram>().getPuzzleSize();
+        correctPuzzle = chosenGram.getResult();
+        puzzleSize = chosenGram.getPuzzleSize();
     }
 
     void getButtons() {
