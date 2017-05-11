@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameController : MonoBehaviour {
     public List<Button> buttons = new List<Button>();
@@ -94,34 +95,10 @@ public class GameController : MonoBehaviour {
     }
 
     public bool samePuzzle() {
-        string current = "";
-        string correct = "";
-        for (int y = 0; y < puzzleHeight; y++) {
-            for (int i = 0; i < puzzleWidth; i++) {
-                if (y == 5 && i != 2 && i != 3 && i != 4) {
-                    current = current + "1";
-                } else {
-                    current = current + currentPuzzle[y, i];
-                }
-            }
-        }
+        bool equal = correctPuzzle.Rank == currentPuzzle.Rank &&
+            Enumerable.Range(0, correctPuzzle.Rank).All(dimension => correctPuzzle.GetLength(dimension) == currentPuzzle.GetLength(dimension)) &&
+            correctPuzzle.Cast<byte>().SequenceEqual(currentPuzzle.Cast<byte>());
 
-        current.Trim();
-        for (int y = 0; y < puzzleHeight; y++) {
-            for (int i = 0; i < puzzleWidth; i++) {
-                correct = correct + correctPuzzle[y, i];
-            }
-        }
-        correct.Trim();
-        if (current.Equals(correct)) {
-            return true;
-        }
-        return false;
-
-        //bool equal = correctPuzzle.Rank == currentPuzzle.Rank &&
-        //    Enumerable.Range(0, correctPuzzle.Rank).All(dimension => correctPuzzle.GetLength(dimension) == currentPuzzle.GetLength(dimension)) &&
-        //    correctPuzzle.Cast<byte>().SequenceEqual(currentPuzzle.Cast<byte>());
-
-        //return equal;
+        return equal;
     }
 }
