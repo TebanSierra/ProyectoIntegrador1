@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
@@ -11,8 +12,6 @@ public class GameController : MonoBehaviour {
     private Color blackColor = Color.black;
     private Color whiteColor = Color.white;
 
-    string a = "LevelSelec";
-    private float time;
     private bool pressed;
     private int pressedIndex;
     private int totalCheck;
@@ -28,16 +27,18 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     //Variable que contendra la posicion donde sera creado el Juego.
     private Transform canvas;
+    private ChosenNonogram chosenGram;
 
     void Start() {
         getButtons();
         addListener();
-        puzzleHeight = nonogramPuzzle.GetComponent<KeyNonogram>().getTotalHeight();
-        puzzleWidth = nonogramPuzzle.GetComponent<KeyNonogram>().getTotalSize();
+        chosenGram = GetComponent<AddNanogram>().getChosenNonogram();
+        puzzleHeight = chosenGram.getTotalHeight();
+        puzzleWidth = chosenGram.getTotalSize();
         correctPuzzle = new byte[puzzleHeight,puzzleWidth];
         currentPuzzle = new byte[puzzleHeight, puzzleWidth];
-        correctPuzzle = nonogramPuzzle.GetComponent<KeyNonogram>().getResult();
-        puzzleSize = nonogramPuzzle.GetComponent<KeyNonogram>().getPuzzleSize();
+        correctPuzzle = chosenGram.getResult();
+        puzzleSize = chosenGram.getPuzzleSize();
     }
 
     void getButtons() {
@@ -72,11 +73,8 @@ public class GameController : MonoBehaviour {
             i = 0;
             if (totalCheck >= puzzleSize) {
                 if (samePuzzle()) {
-
-                    GameObject text = Instantiate(Win);
-                    text.transform.SetParent(canvas, false);
+                    StartCoroutine(winer());
                     
-                    SceneManager.LoadScene(a);
                 }
             }
         }else {
@@ -91,45 +89,27 @@ public class GameController : MonoBehaviour {
             i = 0;
             if (totalCheck >= puzzleSize) {
                 if (samePuzzle()) {
-                    GameObject text = Instantiate(Win);
-                    text.transform.SetParent(canvas, false);
-                   
-                    SceneManager.LoadScene(a);
-                    
+                    StartCoroutine(winer());
                 }
             }
         }
+    }
+    public IEnumerator winer()
+    {
+        GameObject text = Instantiate(Win);
+        text.transform.SetParent(canvas, false);
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("LevelSelec");
+
+
     }
 
     public bool samePuzzle() {
-        string current = "";
-        string correct = "";
-        for (int y = 0; y < puzzleHeight; y++) {
-            for (int i = 0; i < puzzleWidth; i++) {
-                if (y == 5 && i != 2 && i != 3 && i != 4) {
-                    current = current + "1";
-                } else {
-                    current = current + currentPuzzle[y, i];
-                }
-            }
-        }
+        bool equal = correctPuzzle.Rank == currentPuzzle.Rank &&
+            Enumerable.Range(0, correctPuzzle.Rank).All(dimension => correctPuzzle.GetLength(dimension) == currentPuzzle.GetLength(dimension)) &&
+            correctPuzzle.Cast<byte>().SequenceEqual(currentPuzzle.Cast<byte>());
 
-        current.Trim();
-        for (int y = 0; y < puzzleHeight; y++) {
-            for (int i = 0; i < puzzleWidth; i++) {
-                correct = correct + correctPuzzle[y, i];
-            }
-        }
-        correct.Trim();
-        if (current.Equals(correct)) {
-            return true;
-        }
-        return false;
-
-        //bool equal = correctPuzzle.Rank == currentPuzzle.Rank &&
-        //    Enumerable.Range(0, correctPuzzle.Rank).All(dimension => correctPuzzle.GetLength(dimension) == currentPuzzle.GetLength(dimension)) &&
-        //    correctPuzzle.Cast<byte>().SequenceEqual(currentPuzzle.Cast<byte>());
-
-        //return equal;
+        return equal;
     }
+    
 }

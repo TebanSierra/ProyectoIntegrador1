@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class AddNanogram : MonoBehaviour {
 
@@ -18,6 +19,7 @@ public class AddNanogram : MonoBehaviour {
 
     [SerializeField]
     private int nonogramSize;
+    
     private int nonogramHeight;
     private int monogramWidth;
     private int cols;
@@ -25,22 +27,28 @@ public class AddNanogram : MonoBehaviour {
     private GameObject nonogramPuzzle;
     public List<string[]> rows;
     private List<string[]> columns;
+    private ChosenNonogram chosenGram;
+    List<ChosenNonogram> nonogramList = new List<ChosenNonogram>();
 
 
     private byte[,] puzzle;
 
     //Funcion que es llamada cuando se inica el juego
     void Awake() {
-        rows = nonogramPuzzle.GetComponent<KeyNonogram>().getRows();
+        getNonograms();
+        chooseNonogram();
+        rows = chosenGram.getRows();
+        nonogramSize = chosenGram.getTotalHeight() * chosenGram.getTotalSize();
+        nonogramField.GetComponent<GridLayoutGroup>().constraintCount = chosenGram.getTotalSize() + chosenGram.getRow(); ;
         fillUpperHints();
         fillRest();
     }
 
     void fillUpperHints() {
         int x = 0;
-        while (x < nonogramPuzzle.GetComponent<KeyNonogram>().getRow() *(nonogramPuzzle.GetComponent<KeyNonogram>().getCols()+ nonogramPuzzle.GetComponent<KeyNonogram>().getRow())) {
+        while (x < chosenGram.getRow() *(chosenGram.getCols()+chosenGram.getRow())) {
             foreach (string[] row in rows) {
-                for (int i = 0; i < nonogramPuzzle.GetComponent<KeyNonogram>().getRow(); i++) {
+                for (int i = 0; i < chosenGram.getRow(); i++) {
                     hints.GetComponent<Text>().text = "";
                     GameObject text = Instantiate(hints);
                     text.name = "empty" + i;
@@ -48,7 +56,7 @@ public class AddNanogram : MonoBehaviour {
                     x++;
                 }
 
-                for (int i = 0; i < nonogramPuzzle.GetComponent<KeyNonogram>().getTotalSize(); i++) {
+                for (int i = 0; i < chosenGram.getTotalSize(); i++) {
                     hints.GetComponent<Text>().text = row[i];
                     GameObject text = Instantiate(hints);
                     text.name = "row" + i;
@@ -64,9 +72,9 @@ public class AddNanogram : MonoBehaviour {
         int x = 0;
         int m = 0;
         int tot = 0;
-        columns = nonogramPuzzle.GetComponent<KeyNonogram>().getCol();
-        while (x < nonogramSize + (nonogramPuzzle.GetComponent<KeyNonogram>().getRow() * nonogramPuzzle.GetComponent<KeyNonogram>().getCols())) {
-            for (int i = 0; i < nonogramPuzzle.GetComponent<KeyNonogram>().getTotalHeight(); i++) {
+        columns = chosenGram.getCol();
+        while (x < nonogramSize + (chosenGram.getRow() * chosenGram.getCols())) {
+            for (int i = 0; i <chosenGram.getTotalHeight(); i++) {
                 foreach (string[] column in columns) {
                     hints.GetComponent<Text>().text = column[i];
                     GameObject text = Instantiate(hints);
@@ -76,7 +84,7 @@ public class AddNanogram : MonoBehaviour {
                     tot++;
                 }
 
-                for (int j = 0; j < nonogramPuzzle.GetComponent<KeyNonogram>().getTotalSize(); j++) {
+                for (int j = 0; j < chosenGram.getTotalSize(); j++) {
                     GameObject piece = Instantiate(nonogramPiece);
                     piece.name = m.ToString();
                     piece.transform.SetParent(nonogramField, false);
@@ -85,5 +93,20 @@ public class AddNanogram : MonoBehaviour {
                 }
             }
         }
+    }
+
+    void getNonograms() {
+        nonogramList.Add(nonogramPuzzle.GetComponent<KeyNonogram>());
+        nonogramList.Add(nonogramPuzzle.GetComponent<TVNonogram>());
+        nonogramList.Add(nonogramPuzzle.GetComponent<MusicNonogram>());
+    }
+
+    void chooseNonogram() {
+        int index = Random.Range(0, nonogramList.Count);
+        chosenGram = nonogramList.ElementAt(index);
+    }
+
+    public ChosenNonogram getChosenNonogram() {
+        return chosenGram;
     }
 }

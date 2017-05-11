@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AddNanogram.cs" />
+    <Compile Include="Assets\Scripts\ChosenNonogram.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\KeyNonogram.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\LevelSelect.cs" />
@@ -91,10 +92,14 @@
     <Compile Include="Assets\Scripts\MainMenu\settings.cs" />
     <Compile Include="Assets\Scripts\Maze\ExitControl.cs" />
     <Compile Include="Assets\Scripts\Maze\Moverderecha.cs" />
+    <Compile Include="Assets\Scripts\MusicNonogram.cs" />
     <Compile Include="Assets\Scripts\Nonogram.cs" />
-    <Compile Include="Assets\Scripts\Nonograms\CasaNonogram.cs" />
-    <Compile Include="Assets\Scripts\Nonograms\PcNonogram.cs" />
-    <Compile Include="Assets\Scripts\Nonograms\controlback.cs" />
+    <Compile Include="Assets\Scripts\PalabrasCamilo\DecodingController.cs" />
+    <Compile Include="Assets\Scripts\TVNonogram.cs" />
+    <Compile Include="Assets\Scripts\WordsEsteban\Checking.cs" />
+    <Compile Include="Assets\Scripts\WordsEsteban\Draggable.cs" />
+    <Compile Include="Assets\Scripts\WordsEsteban\DropZone.cs" />
+    <Compile Include="Assets\Scripts\WordsEsteban\Setup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Images\ColorfulButtons\Credits.txt" />

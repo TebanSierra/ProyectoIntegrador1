@@ -7,7 +7,6 @@ public class Moverderecha : MonoBehaviour {
 
     public Transform heroobj;
     List<string> lista = new List<string>();
-    public Timer time = new Timer(3000);
     int tamaño;
     private int cont;
     // Use this for initialization
@@ -17,7 +16,6 @@ public class Moverderecha : MonoBehaviour {
     Collision col;
     // Update is called once per frame
     void Update() {
-        cont += (int)Time.deltaTime;
     }
     public void moverderecha() {
         if (true) {
@@ -56,8 +54,7 @@ public class Moverderecha : MonoBehaviour {
         }
     }
     public void empezar()
-    {
-        cont = (int)Time.deltaTime;
+    {   
         
         StartCoroutine(DoTheDance());
     }

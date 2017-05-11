@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyNonogram : MonoBehaviour {
+public class KeyNonogram : MonoBehaviour, ChosenNonogram {
 
     [SerializeField]
     private byte[,] ng = new byte[,] {{ 1,1,1,1,1,1,1,1,1,1,1,1}, 
