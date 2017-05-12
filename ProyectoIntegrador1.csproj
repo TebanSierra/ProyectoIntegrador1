@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\KeyNonogram.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\LevelSelect.cs" />
     <Compile Include="Assets\Scripts\LevelSelect\Seleccionnivel1.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\ControlSeleclvl.cs" />
     <Compile Include="Assets\Scripts\MainMenu\MenuControl.cs" />
     <Compile Include="Assets\Scripts\MainMenu\Vol.cs" />
     <Compile Include="Assets\Scripts\MainMenu\settings.cs" />
