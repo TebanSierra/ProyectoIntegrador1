@@ -86,6 +86,7 @@ public class Moverderecha : MonoBehaviour {
             yield return new WaitForSeconds(3f);
             print("despues de esperar");
         }
+        lista.Clear();
     }
 }
 

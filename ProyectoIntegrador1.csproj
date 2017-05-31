@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PararControl.cs" />
     <Compile Include="Assets\Scripts\AddNanogram.cs" />
     <Compile Include="Assets\Scripts\ChosenNonogram.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\Scripts\MainMenu\Vol.cs" />
     <Compile Include="Assets\Scripts\MainMenu\settings.cs" />
     <Compile Include="Assets\Scripts\Maze\ExitControl.cs" />
+    <Compile Include="Assets\Scripts\Maze\MoverLabLargo.cs" />
     <Compile Include="Assets\Scripts\Maze\Moverderecha.cs" />
     <Compile Include="Assets\Scripts\MusicNonogram.cs" />
     <Compile Include="Assets\Scripts\Nonogram.cs" />
