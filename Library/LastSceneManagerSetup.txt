@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/LvlMaze/lvl5.unity
+- path: Assets/Scenes/LevelSelec.unity
   isLoaded: 1
   isActive: 1

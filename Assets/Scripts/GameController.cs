@@ -9,6 +9,14 @@ public class GameController : MonoBehaviour {
     public List<Button> buttons = new List<Button>();
 
     [SerializeField]
+    private Button checkPuzzle;
+    [SerializeField]
+    private Text scoreShow;
+
+    private int correctPuzzles;
+    private int currentPuzzles;
+
+    [SerializeField]
     private Color blackColor = Color.black;
     private Color whiteColor = Color.white;
 
@@ -32,10 +40,14 @@ public class GameController : MonoBehaviour {
     void Start() {
         getButtons();
         addListener();
+        chooseNonogram();
+    }
+
+    void chooseNonogram() {
         chosenGram = GetComponent<AddNanogram>().getChosenNonogram();
         puzzleHeight = chosenGram.getTotalHeight();
         puzzleWidth = chosenGram.getTotalSize();
-        correctPuzzle = new byte[puzzleHeight,puzzleWidth];
+        correctPuzzle = new byte[puzzleHeight, puzzleWidth];
         currentPuzzle = new byte[puzzleHeight, puzzleWidth];
         correctPuzzle = chosenGram.getResult();
         puzzleSize = chosenGram.getPuzzleSize();
@@ -52,6 +64,7 @@ public class GameController : MonoBehaviour {
         foreach (Button button in buttons) {
             button.onClick.AddListener(pickPuzzle);
         }
+        checkPuzzle.onClick.AddListener(checkAll);
     }
 
     public void pickPuzzle() {
@@ -87,17 +100,26 @@ public class GameController : MonoBehaviour {
             }
             currentPuzzle[x, pressedIndex%puzzleWidth] = 0;
             i = 0;
-            if (totalCheck >= puzzleSize) {
-                if (samePuzzle()) {
-                    StartCoroutine(winer());
-                }
-            }
         }
     }
+
+    public void checkAll() {
+        if (samePuzzle() == true) {
+            correctPuzzles++;
+            currentPuzzles++;
+            string textscore = "Correcto!";
+            scoreShow.GetComponent<Text>().text = textscore;
+            StartCoroutine(winer());
+        } else {
+            currentPuzzles++;
+            string textscore = "Try Again!";
+            scoreShow.GetComponent<Text>().text = textscore;
+            StartCoroutine(winer());
+        }
+    }
+
     public IEnumerator winer()
     {
-        GameObject text = Instantiate(Win);
-        text.transform.SetParent(canvas, false);
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("LevelSelec");
 

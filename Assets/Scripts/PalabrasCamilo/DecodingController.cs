@@ -21,13 +21,17 @@ public class DecodingController : MonoBehaviour {
     [SerializeField]
     private InputField userWord;
     [SerializeField]
-    private InputField userNumber;
+    private Text userNumber;
     [SerializeField]
     private Text forwards;
     [SerializeField]
     private Text backwards;
     [SerializeField]
     private Text changedLetters;
+    [SerializeField]
+    private Text category;
+    [SerializeField]
+    private Text currentScore;
     
     private bool direccion;
     private int ammountChanged;
@@ -36,6 +40,9 @@ public class DecodingController : MonoBehaviour {
     private string modifiedWord;
     private string guessWord;
     private int guessNumber;
+    private int currentWords;
+    private int correctWords;
+    private int counter;
 
 	// Use this for initialization
 	void Start () {
@@ -52,19 +59,27 @@ public class DecodingController : MonoBehaviour {
     void checkWord() {
         guessWord = userWord.text;
         string text = userNumber.text;
-        guessNumber = IntParseFast(userNumber.text);
-        if (guessWord.Equals(chosenWord) && guessNumber == ammountChanged) {
+        if (guessWord.Equals(chosenWord)) {
+            correctWords++;
+            currentWords++;
+            string textscore = correctWords + "/" + currentWords + " correctas";
+            currentScore.GetComponent<Text>().text = textscore;
             chooseWord();
         } else {
-            Debug.Log("Your word is: " + guessWord + ", Correct word is: " + chosenWord);
-            Debug.Log("Your Number is: " + guessNumber.ToString() + ", Correct number is: " + ammountChanged);
+            currentWords++;
+            string textscore = correctWords + "/" + currentWords + " correctas";
+            currentScore.GetComponent<Text>().text = textscore;
+            chooseWord();
 
         }
         userWord.text = "";
-        userNumber.text = "";
     }
 
     void chooseWord() {
+        if (counter >2) {
+            counter = 0;
+            chooseList();
+        }
         lettersChanged = Random.Range(0, palabras.Length);
         chosenWord = palabras[lettersChanged];
         ammountChanged = Random.Range(1, 27);
@@ -73,6 +88,8 @@ public class DecodingController : MonoBehaviour {
         string toPrint = lettersChanged + " Letras Cambiadas";
         changedLetters.GetComponent<Text>().text = toPrint;
         changedWord.GetComponent<Text>().text = modifiedWord;
+        userNumber.GetComponent<Text>().text = ammountChanged.ToString();
+        counter++;
     }
 
     void checkChanges() {
@@ -102,7 +119,7 @@ public class DecodingController : MonoBehaviour {
                 value = value + ammountChanged;
                 forwards.enabled = true;
                 backwards.enabled = false;
-                if (value > 123) {
+                if (value > 122) {
                     int x = value - 122;
                     value = 96 + x;
 
@@ -149,5 +166,32 @@ public class DecodingController : MonoBehaviour {
     void chooseList() {
         int picker = Random.Range(0,5);
         palabras = listaPalabras.ElementAt(picker);
+        string toCategory ="";
+        switch (picker) {
+            case 0:
+                toCategory = "Clases";
+                category.GetComponent<Text>().text = toCategory;
+                break;
+            case 1:
+                toCategory = "Computadores";
+                category.GetComponent<Text>().text = toCategory;
+                break;
+            case 2:
+                toCategory = "Instrumentos";
+                category.GetComponent<Text>().text = toCategory;
+                break;
+            case 3:
+                toCategory = "Frutas";
+                category.GetComponent<Text>().text = toCategory;
+                break;
+            case 4:
+                toCategory = "Animales";
+                category.GetComponent<Text>().text = toCategory;
+                break;
+            default:
+                toCategory = "";
+                category.GetComponent<Text>().text = toCategory;
+                break;
+        }
     }
 }

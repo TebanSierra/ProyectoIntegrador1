@@ -58,7 +58,6 @@ public class MoverLabLargo : MonoBehaviour {
     }
     public void empezar()
     {
-
         StartCoroutine(DoTheDance());
     }
     public void mover(string a)
